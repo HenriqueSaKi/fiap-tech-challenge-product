@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks-product-deployment
+  labels:
+    app: eks-product-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eks-product-app
+  template:
+    metadata:
+      labels:
+        app: eks-product-app
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+                      - arm64
+      containers:
+        - name: eks-product-app
+          image: #Atualizar a imagem
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: DATASOURCE_DRIVER_CLASS_NAME
+              value: org.postgresql.Driver
+            - name: JPA_DIALECT
+              value: org.hibernate.dialect.PostgreSQLDialect
+            - name: DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: eks-product-configmaps
+                  key: datasource_url
+            - name: DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: eks-product-secrets
+                  key: datasource_username
+            - name: DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: eks-product-secrets
+                  key: datasource_password
+          readinessProbe:
+            httpGet:
+              path: /api/v1/actuator/health
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/v1/actuator/health
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1024Mi
+            limits:
+              cpu: 2000m
+              memory: 2048Mi
+          imagePullPolicy: IfNotPresent
+      nodeSelector:
+        kubernetes.io/os: linux

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: eks-product-service
+  labels:
+    app: eks-product-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: eks-product-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
