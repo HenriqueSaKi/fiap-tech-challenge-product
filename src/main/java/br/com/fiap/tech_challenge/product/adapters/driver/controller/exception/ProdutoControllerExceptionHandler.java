@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ProdutoControllerException {
+public class ProdutoControllerExceptionHandler {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ProdutoControllerException.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ProdutoControllerExceptionHandler.class);
 
   @ExceptionHandler(ProdutoJaCadastradoException.class)
   public ResponseEntity<String> produtoJaCadastradoException(ProdutoJaCadastradoException produtoJaCadastradoException) {
