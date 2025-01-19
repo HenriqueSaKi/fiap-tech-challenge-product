@@ -1,21 +1,11 @@
-FROM maven:3.9.8-eclipse-temurin-17-alpine AS build
+FROM maven:3.9.8-eclipse-temurin-17-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY . app/
 
-RUN mvn clean package -Dmaven.test.skip=true
+RUN mvn -f app/pom.xml clean package -Dmaven.test.skip=true
 
-FROM eclipse-temurin:17-jre-alpine
-
-WORKDIR /app
-
-COPY --from=build /app/target/ /app/target/
-
-# Copiar o script de entrypoint
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["java", "-jar", "app/target/product-0.0.1-SNAPSHOT.jar"]
 
 EXPOSE 8080/tcp

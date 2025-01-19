@@ -5,4 +5,4 @@ metadata:
   labels:
     app: eks-product-app
 data:
-  datasource_url: # Atualizar para a URL esperada
+  datasource_url: jdbc:postgresql://rds-product-tf.ciwxxlge9yer.us-east-1.rds.amazonaws.com:5432/product
