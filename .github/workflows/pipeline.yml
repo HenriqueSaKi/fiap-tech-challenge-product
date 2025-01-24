@@ -83,7 +83,7 @@ jobs:
 
       - name: Publish to ECR
         env:
-          ECR_URL: 071989740414.dkr.ecr.us-east-1.amazonaws.com/product
+          ECR_URL: 666881761373.dkr.ecr.us-east-1.amazonaws.com/product
         run: |
           docker tag product:latest $ECR_URL:latest
           docker push $ECR_URL:latest
@@ -114,7 +114,7 @@ jobs:
       - name: Update Kube Config
         env:
           EKS_CLUSTER_NAME: "EKS-fiap-tech-challenge"
-        run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region us-east-1
+        run: aws eks update-kubeconfig --region us-east-1 --name $EKS_CLUSTER_NAME
 
       - name: Deploy Secrets
         run: kubectl apply -f k8s/eks-product-secrets.yaml

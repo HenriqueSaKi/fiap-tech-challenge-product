@@ -5,4 +5,4 @@ metadata:
   labels:
     app: eks-product-app
 data:
-  datasource_url: jdbc:postgresql://rds-product-tf.ciwxxlge9yer.us-east-1.rds.amazonaws.com:5432/product
+  datasource_url: jdbc:postgresql://rds-product-tf.cjdvu1crwior.us-east-1.rds.amazonaws.com:5432/product
