@@ -9,11 +9,10 @@ import java.util.List;
 
 public interface ProdutoUseCase {
 
-    Long cadastrarProduto(CadastrarProdutoDTO cadastrar);
+  Long cadastrarProduto(CadastrarProdutoDTO cadastrar);
+  Produto buscarProdutoPorId(Long id);
+  List<Produto> buscarProdutosPorCategoria(CategoriaProduto categoriaProduto);
+  Long atualizarProduto(AtualizarProdutoDTO atualizar);
+  void excluirProduto(Long produtoId);
 
-    List<Produto> buscarProdutosPorCategoria(CategoriaProduto categoriaProduto);
-
-    Long atualizarProduto(AtualizarProdutoDTO atualizar);
-
-    void excluirProduto(Long produtoId);
 }

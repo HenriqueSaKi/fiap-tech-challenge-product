@@ -38,6 +38,15 @@ public class ProdutoController implements ProdutoSwaggerInterface {
     }
 
     @Override
+    public ResponseEntity<Produto> consultarProdutoPorId(Long id) {
+        var produtoGateway = new ProdutoGateway(this.produtoRepository);
+        var produtoUseCase = new ProdutoUseCaseImpl(produtoGateway);
+
+        Produto produto = produtoUseCase.buscarProdutoPorId(id);
+        return new ResponseEntity<>(produto, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<Object> consultaPorCategoria(CategoriaProduto categoriaProduto) {
         var produtoGateway = new ProdutoGateway(this.produtoRepository);
         var produtoUseCase = new ProdutoUseCaseImpl(produtoGateway);

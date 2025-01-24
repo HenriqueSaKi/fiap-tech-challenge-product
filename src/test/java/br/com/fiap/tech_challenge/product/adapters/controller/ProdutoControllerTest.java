@@ -49,6 +49,14 @@ public class ProdutoControllerTest {
   }
 
   @Test
+  public void testConsultaPorId() throws Exception {
+    when(repository.findById(any())).thenReturn(Optional.of(ProdutoEntityMock.getProdutoEntity()));
+    mockMvc.perform(get("/produtos/{id}", 1L)
+            .contentType("application/json"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
   public void testConsultaPorCategoria() throws Exception {
     when(repository.findAllByCategoriaProduto(any())).thenReturn(List.of(ProdutoEntityMock.getProdutoEntity()));
     mockMvc.perform(get("/produtos/categoria/{categoria}", CategoriaProduto.LANCHE)

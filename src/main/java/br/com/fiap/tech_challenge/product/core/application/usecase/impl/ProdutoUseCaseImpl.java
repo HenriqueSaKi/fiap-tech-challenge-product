@@ -41,6 +41,24 @@ public class ProdutoUseCaseImpl implements ProdutoUseCase {
     }
 
     @Override
+    public Produto buscarProdutoPorId(Long id) {
+        try {
+            Produto produtos = this.produtoGatewayPort.findById(id);
+            if (produtos == null) {
+                LOGGER.warn("Nenhum produto encontrado com o id informado: {}", id);
+                throw new NenhumProdutoEncontradoException(PRODUTO_NAO_ENCONTRADO_EXCEPTION);
+            }
+            return produtos;
+        }
+        catch (NenhumProdutoEncontradoException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new ErroAoConsultarProdutoException(ERRO_AO_CONSULTAR_PRODUTO_POR_ID_EXCEPTION);
+        }
+    }
+
+    @Override
     public List<Produto> buscarProdutosPorCategoria(CategoriaProduto categoriaProduto) {
         try {
             List<Produto> produtos = this.produtoGatewayPort.findProdutosByCategoria(categoriaProduto);

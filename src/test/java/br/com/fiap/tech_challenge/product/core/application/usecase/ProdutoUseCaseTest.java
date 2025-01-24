@@ -45,6 +45,21 @@ public class ProdutoUseCaseTest {
   }
 
   @Test
+  public void testBuscarProdutoPorId() {
+    when(gatewayPort.findById(any())).thenReturn(ProdutoMock.getProduto());
+    Produto produtos = useCase.buscarProdutoPorId(1L);
+    assertNotNull(produtos);
+
+  }
+
+  @Test
+  public void testBuscarProdutoPorId_whenProdutoIsNull() {
+    when(gatewayPort.findById(any())).thenReturn(null);
+    assertThrows(NenhumProdutoEncontradoException.class,
+        () -> useCase.buscarProdutoPorId(1L));
+  }
+
+  @Test
   public void testBuscarProdutosPorCategoria() {
     when(gatewayPort.findProdutosByCategoria(any())).thenReturn(List.of(ProdutoMock.getProduto()));
     List<Produto> produtos = useCase.buscarProdutosPorCategoria(CategoriaProduto.LANCHE);

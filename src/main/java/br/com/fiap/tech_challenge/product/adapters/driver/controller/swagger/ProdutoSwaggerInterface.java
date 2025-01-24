@@ -2,6 +2,7 @@ package br.com.fiap.tech_challenge.product.adapters.driver.controller.swagger;
 
 import br.com.fiap.tech_challenge.product.adapters.driver.controller.model.request.AtualizarProdutoDTO;
 import br.com.fiap.tech_challenge.product.adapters.driver.controller.model.request.CadastrarProdutoDTO;
+import br.com.fiap.tech_challenge.product.core.domain.model.Produto;
 import br.com.fiap.tech_challenge.product.core.domain.model.enums.CategoriaProduto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,6 +37,23 @@ public interface ProdutoSwaggerInterface {
     @RequestMapping(
             method = RequestMethod.POST)
     ResponseEntity<String> cadastrarProduto(@RequestBody CadastrarProdutoDTO cadastrar);
+
+  @Operation(description = "Lista todos os produtos de determinada categoria.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Produtos encontrados com sucesso!", content =
+      @Content(mediaType = "application/json", schema =
+      @Schema(implementation = List.class))),
+      @ApiResponse(responseCode = "404", description = "Nenhum produto encontrado", content =
+      @Content(mediaType = "application/text", examples =
+      @ExampleObject(value = "Não foram encontrados produtos para essa categoria."))),
+      @ApiResponse(responseCode = "500", description = "Erro ao consultar produto", content =
+      @Content(mediaType = "application/text", examples =
+      @ExampleObject(value = "Ocorreu um erro inesperado ao consultar os produtos dessa categoria.")))
+  })
+  @RequestMapping(
+      value = "/{id}",
+      method = RequestMethod.GET)
+  ResponseEntity<Produto> consultarProdutoPorId(@PathVariable("id") Long id);
 
     @Operation(description = "Lista todos os produtos de determinada categoria.")
     @ApiResponses(value = {
