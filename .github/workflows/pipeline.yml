@@ -83,7 +83,7 @@ jobs:
 
       - name: Publish to ECR
         env:
-          ECR_URL: 666881761373.dkr.ecr.us-east-1.amazonaws.com/product
+          ECR_URL: 194424007004.dkr.ecr.us-east-1.amazonaws.com/product
         run: |
           docker tag product:latest $ECR_URL:latest
           docker push $ECR_URL:latest
