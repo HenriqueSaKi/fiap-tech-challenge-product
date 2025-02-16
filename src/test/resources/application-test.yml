@@ -8,13 +8,14 @@ spring:
   application:
     name: product
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS LANCHONETE
     username: sa
     password: password
     driver-class-name: org.h2.Driver
   jpa:
+    show-sql: true
     hibernate:
-      ddl-auto: update  # Ensures the schema is created
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
